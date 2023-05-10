@@ -1,0 +1,49 @@
+---
+export interface Props {
+  image: string;
+  alt: string;
+  title: string;
+  description: string;
+  tags: string[];
+  buttons: { text: string; href: string }[];
+}
+
+const { image, alt, title, description, tags } = Astro.props;
+---
+
+<div class='project__container'>
+  <div class='project__image'>
+    <img src={'/' + image} alt={alt} width='200px' />
+  </div>
+  <div class='project__info'>
+    <div class='project__header'>
+      <h4>{title}</h4>
+      <div>
+        {tags.map((tag) => <span> {tag} </span>)}
+      </div>
+    </div>
+    <p>{description}</p>
+  </div>
+</div>
+
+<style>
+  .project__container {
+    display: flex;
+    flex-direction: row;
+  }
+
+  .project__image {
+    width: 40%;
+  }
+  .project__info {
+    width: 60%;
+  }
+
+  .project__header span {
+    background: green;
+    border-radius: 10px;
+    padding: 5px;
+    margin: 0px 10px 0px 0px;
+    text-align: center;
+  }
+</style>

@@ -1,81 +1,256 @@
 ---
 import Layout from '../layouts/Layout.astro';
 import Card from '../components/Card.astro';
+import Project from '../components/Project.astro';
+import headshot from '../images/headshot.png';
+import bracket from '../icons/bracket.svg';
+import bike from '../icons/bike.svg';
+import controller from '../icons/controller.svg';
 ---
 
-<Layout title="Welcome to Astro.">
-	<main>
-		<h1>Welcome to <span class="text-gradient">Astro</span></h1>
-		<p class="instructions">
-			To get started, open the directory <code>src/pages</code> in your project.<br />
-			<strong>Code Challenge:</strong> Tweak the "Welcome to Astro" message above.
-		</p>
-		<ul role="list" class="link-card-grid">
-			<Card
-				href="https://docs.astro.build/"
-				title="Documentation"
-				body="Learn how Astro works and explore the official API docs."
-			/>
-			<Card
-				href="https://astro.build/integrations/"
-				title="Integrations"
-				body="Supercharge your project with new frameworks and libraries."
-			/>
-			<Card
-				href="https://astro.build/themes/"
-				title="Themes"
-				body="Explore a galaxy of community-built starter themes."
-			/>
-			<Card
-				href="https://astro.build/chat/"
-				title="Community"
-				body="Come say hi to our amazing Discord community. ❤️"
-			/>
-		</ul>
-	</main>
+<Layout title='Sarah dePalo | Software Developer'>
+  <section class='hero'>
+    <div class='wrapper'>
+      <div class='headshot-container'>
+        <div class='gradient-circle'>
+          <img src={bracket} alt='code bracket' />
+        </div>
+        <div class='gradient-circle'>
+          <img src={bike} alt='bike' />
+        </div>
+        <div class='gradient-circle'>
+          <img src={controller} alt='video game controller' />
+        </div>
+
+        <img src={headshot} alt='software developer' />
+      </div>
+      <div class='name'>
+        <h1>
+          Hi, I'm Sarah dePalo, <br />
+          Developer & Other Things
+        </h1>
+      </div>
+      <div class='description'>
+        <p>
+          Lorem Ipsum blah blah blah blah blah blah blah blah blah blah blah blah blah blah blah
+          blah blah blah Lorem Ipsum blah blah blah blah blah blah blah blah blah blah blah blah
+          blah blah blah blah blah blah
+        </p>
+      </div>
+    </div>
+  </section>
+
+  <main>
+    <Project
+      image='shiba-tweet.png'
+      alt='tweet with a shiba inu and a quote from Winston Churchill'
+      title='Shiba Inu Twitter Bot'
+      description='Lorem ipsum'
+      tags={['Python', 'AWS', 'Flask']}
+      buttons={[
+        {
+          text: 'Check out the code',
+          href: 'https://github.com/sarahdepalo/twitter-bot',
+        },
+      ]}
+    />
+
+    <p class='instructions'>
+      To get started, open the directory <code>src/pages</code> in your project.<br />
+      <strong>Code Challenge:</strong> Tweak the "Welcome to Astro" message above.
+    </p>
+    <ul role='list' class='link-card-grid'>
+      <Card
+        href='https://docs.astro.build/'
+        title='Documentation'
+        body='Learn how Astro works and explore the official API docs.'
+      />
+      <Card
+        href='https://astro.build/integrations/'
+        title='Integrations'
+        body='Supercharge your project with new frameworks and libraries.'
+      />
+      <Card
+        href='https://astro.build/themes/'
+        title='Themes'
+        body='Explore a galaxy of community-built starter themes.'
+      />
+      <Card
+        href='https://astro.build/chat/'
+        title='Community'
+        body='Come say hi to our amazing Discord community. ❤️'
+      />
+    </ul>
+  </main>
 </Layout>
 
 <style>
-	main {
-		margin: auto;
-		padding: 1.5rem;
-		max-width: 60ch;
-	}
-	h1 {
-		font-size: 3rem;
-		font-weight: 800;
-		margin: 0;
-	}
-	.text-gradient {
-		background-image: var(--accent-gradient);
-		-webkit-background-clip: text;
-		-webkit-text-fill-color: transparent;
-		background-size: 400%;
-		background-position: 0%;
-	}
-	.instructions {
-		line-height: 1.6;
-		margin: 1rem 0;
-		border: 1px solid rgba(var(--accent), 25%);
-		background-color: white;
-		padding: 1rem;
-		border-radius: 0.4rem;
-	}
-	.instructions code {
-		font-size: 0.875em;
-		font-weight: bold;
-		background: rgba(var(--accent), 12%);
-		color: rgb(var(--accent));
-		border-radius: 4px;
-		padding: 0.3em 0.45em;
-	}
-	.instructions strong {
-		color: rgb(var(--accent));
-	}
-	.link-card-grid {
-		display: grid;
-		grid-template-columns: repeat(auto-fit, minmax(24ch, 1fr));
-		gap: 1rem;
-		padding: 0;
-	}
+  main {
+    margin: auto;
+    padding: 1.5rem;
+    max-width: 80vw;
+  }
+  h1 {
+    font-size: 3rem;
+    font-weight: 800;
+    margin: 0;
+    color: #fff;
+  }
+
+  .gradient-circle {
+    background: linear-gradient(-45deg, #a7d799, #1f9850, #0c823c, #006929);
+    background-size: 400% 400%;
+
+    -webkit-animation: gradient 4s ease infinite;
+    -moz-animation: gradient 4s ease infinite;
+    animation: gradient 4s ease infinite;
+    position: absolute;
+    display: flex;
+    align-items: center;
+    top: 20%;
+    left: 5%;
+    transform: translate(-50%, -50%);
+    z-index: 1;
+    border-radius: 100%;
+    height: 100px;
+    width: 100px;
+    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
+  }
+
+  .gradient-circle img {
+    width: 80px;
+    height: 80px;
+  }
+
+  .gradient-circle:nth-of-type(2) {
+    top: 50%;
+    left: 95%;
+    width: 90px;
+    height: 90px;
+  }
+  .gradient-circle:nth-of-type(2) img {
+    width: 70px;
+    height: 70px;
+    margin: 0 auto;
+    display: block;
+  }
+
+  .gradient-circle:nth-of-type(3) {
+    top: 85%;
+    left: 5%;
+    width: 80px;
+    height: 80px;
+  }
+
+  .gradient-circle:nth-of-type(3) img {
+    width: 60px;
+    height: 60px;
+    margin: 0 auto;
+    display: block;
+  }
+
+  @-webkit-keyframes gradient {
+    0% {
+      background-position: 0% 50%;
+    }
+    50% {
+      background-position: 100% 50%;
+    }
+    100% {
+      background-position: 0% 50%;
+    }
+  }
+  @-moz-keyframes gradient {
+    0% {
+      background-position: 0% 50%;
+    }
+    50% {
+      background-position: 100% 50%;
+    }
+    100% {
+      background-position: 0% 50%;
+    }
+  }
+  @keyframes gradient {
+    0% {
+      background-position: 0% 50%;
+    }
+    50% {
+      background-position: 100% 50%;
+    }
+    100% {
+      background-position: 0% 50%;
+    }
+  }
+
+  .hero {
+    background: #324a34;
+    padding: 70px 0px;
+  }
+  .wrapper {
+    display: grid;
+    gap: 24px 24px;
+    grid-template-columns: 3fr 5fr;
+    background: #324a34;
+
+    margin: auto;
+    padding: 1.5rem;
+    max-width: 80vw;
+    color: #fff;
+  }
+
+  .headshot-container {
+    position: relative;
+    grid-row-start: span 2;
+    justify-self: center;
+    align-self: center;
+  }
+
+  .headshot-container img {
+    display: block;
+    width: 100%;
+    max-width: 350px;
+  }
+
+  .name {
+    align-self: center;
+  }
+
+  .description {
+    grid-column-start: 2;
+    grid-row-start: 2;
+  }
+
+  .text-gradient {
+    background-image: var(--accent-gradient);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-size: 400%;
+    background-position: 0%;
+  }
+  .instructions {
+    line-height: 1.6;
+    margin: 1rem 0;
+    border: 1px solid rgba(var(--accent), 25%);
+    background-color: white;
+    padding: 1rem;
+    border-radius: 0.4rem;
+  }
+  .instructions code {
+    font-size: 0.875em;
+    font-weight: bold;
+    background: rgba(var(--accent), 12%);
+    color: rgb(var(--accent));
+    border-radius: 4px;
+    padding: 0.3em 0.45em;
+  }
+  .instructions strong {
+    color: rgb(var(--accent));
+  }
+  .link-card-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(24ch, 1fr));
+    gap: 1rem;
+    padding: 0;
+  }
 </style>
