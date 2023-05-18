@@ -11,12 +11,12 @@ export interface Props {
 const { image, alt, title, description, tags } = Astro.props;
 ---
 
-<div class='project__container'>
-  <div class='project__image'>
-    <img src={'/' + image} alt={alt} width='200px' />
+<div class="project__container">
+  <div class="project__image">
+    <img src={'/' + image} alt={alt} width="200px" />
   </div>
-  <div class='project__info'>
-    <div class='project__header'>
+  <div class="project__info">
+    <div class="project__header">
       <h4>{title}</h4>
       <div>
         {tags.map((tag) => <span> {tag} </span>)}
