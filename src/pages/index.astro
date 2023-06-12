@@ -5,10 +5,12 @@ import headshot from '../images/headshot.png';
 import bracket from '../icons/bracket.svg';
 import bike from '../icons/bike.svg';
 import controller from '../icons/controller.svg';
+import flower from '../icons/flower.svg';
 ---
 
-<Layout title="Sarah dePalo | Software Developer">
+<Layout title="Sarah dePalo | Developer">
   <div class="container">
+    <!-- This will be moved to the layout component once done -->
     <nav>
       <p>Sarah</p>
       <ul>
@@ -62,19 +64,44 @@ import controller from '../icons/controller.svg';
   </div>
 
   <main>
-    <Project
-      image="shiba-tweet.png"
-      alt="tweet with a shiba inu and a quote from Winston Churchill"
-      title="Shiba Inu Twitter Bot"
-      description="Lorem ipsum"
-      tags={['Python', 'AWS', 'Flask']}
-      buttons={[
-        {
-          text: 'Check out the code',
-          href: 'https://github.com/sarahdepalo/twitter-bot',
-        },
-      ]}
-    />
+    <section class="projects__wrapper">
+      <h3>Recent Projects</h3>
+      <img src={flower} alt="" />
+      <p>I'm always coding something. Here are some of my featured works.</p>
+      <div class="projects">
+        <!-- Pull this info from a JSON file instead and then map through it to create the components -->
+        <Project
+          image="shiba-tweet.png"
+          alt="tweet with a shiba inu and a quote from Winston Churchill"
+          title="Shiba Inu Twitter Bot"
+          description="Before Twitter started suspending bots and raising their API prices, I created a fun little bot that tweeted inspirational quotes with Shiba Inu pictures daily. The bot also runs every 5 minutes to reply to any mentions with another quote and image."
+          tags={['Python', 'AWS', 'Flask']}
+          buttons={[
+            {
+              text: 'Check Out the Code',
+              href: 'https://github.com/sarahdepalo/twitter-bot',
+            },
+            {
+              text: 'Read the Blog Post',
+              href: 'https://sarahdepalo.hashnode.dev/create-a-twitter-bot-with-python',
+            },
+          ]}
+        />
+        <Project
+          image="shiba-tweet.png"
+          alt="tweet with a shiba inu and a quote from Winston Churchill"
+          title="Shiba Inu Twitter Bot"
+          description="Lorem ipsum"
+          tags={['JavaScript', 'React']}
+          buttons={[
+            {
+              text: 'Check out the code',
+              href: 'https://github.com/sarahdepalo/twitter-bot',
+            },
+          ]}
+        />
+      </div>
+    </section>
   </main>
 </Layout>
 
@@ -105,10 +132,22 @@ import controller from '../icons/controller.svg';
     color: #fff;
   }
   main {
-    margin: auto;
-    padding: 1.5rem;
-    max-width: 80vw;
+    background: #ffe5e8;
   }
+  .projects__wrapper {
+    margin: auto;
+    padding: 5rem 1.5rem;
+    width: 1024px;
+    max-width: 100%;
+    background: #ffe5e8;
+  }
+
+  .projects {
+    display: flex;
+    flex-direction: column;
+    gap: 1.5rem;
+  }
+
   .container {
     background: #324a34;
     background-image: url('/hero-bg.png');
@@ -127,7 +166,9 @@ import controller from '../icons/controller.svg';
     gap: 15px 15px;
     grid-template-columns: 3fr 4fr;
     margin: auto;
-    padding: 0 1.5rem;
+    padding: 0 1rem;
+    max-width: 100%;
+    width: 1024px;
     color: #fff;
   }
 
@@ -150,6 +191,7 @@ import controller from '../icons/controller.svg';
 
   .description {
     grid-column-start: span 2;
+    padding: 0 1rem;
   }
 
   h1 {
@@ -158,6 +200,25 @@ import controller from '../icons/controller.svg';
     margin: 0;
     color: #fff;
     animation: fadein 2s forwards;
+  }
+
+  h3 {
+    text-align: center;
+    display: block;
+  }
+  h3 ~ p {
+    text-align: center;
+    max-width: 100%;
+  }
+
+  h3::after {
+    background: #a0ab92;
+    content: '';
+    display: block;
+    height: 2px;
+    margin-top: 1.5em;
+    width: 4em;
+    margin: 1em auto 0;
   }
 
   .weight-500 {
@@ -293,7 +354,7 @@ import controller from '../icons/controller.svg';
       grid-template-columns: 3fr 5fr;
     }
     .hero {
-      padding: 70px 0px;
+      padding: 80px 0px;
     }
     .headshot-container {
       grid-row-start: span 2;
@@ -307,6 +368,7 @@ import controller from '../icons/controller.svg';
     .description {
       grid-column-start: 2;
       grid-row-start: 2;
+      padding: 0;
     }
     h1 {
       font-size: 2rem;
@@ -319,7 +381,6 @@ import controller from '../icons/controller.svg';
   @media (min-width: 1024px) {
     .wrapper {
       gap: 24px 60px;
-      max-width: 90vw;
       grid-template-columns: 3fr 5fr;
     }
 
