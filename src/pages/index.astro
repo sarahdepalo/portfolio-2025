@@ -5,8 +5,29 @@ import headshot from '../images/headshot.png';
 import bracket from '../icons/bracket.svg';
 import bike from '../icons/bike.svg';
 import controller from '../icons/controller.svg';
-import flower from '../icons/flower.svg';
+import flower from '../icons/flower.svg?raw';
 ---
+
+<script>
+  const svg = document.querySelector('#flower');
+  const svgLocation = svg.getBoundingClientRect();
+  const offset = svgLocation.y + svgLocation.height;
+
+  const animateSection = svg?.querySelectorAll('g');
+
+  // Calculate the position when the element should start animating
+  // Add animation classes if in viewport then remove eventlistener
+  function handleScroll() {
+    let viewBottom = window.scrollY + window.innerHeight;
+    if (viewBottom > offset) {
+      animateSection[0].classList.add('line-plant2-pot');
+      animateSection[1].classList.add('line-plant2-plant');
+      document.removeEventListener('scroll', handleScroll);
+    }
+  }
+
+  document.addEventListener('scroll', handleScroll);
+</script>
 
 <Layout title="Sarah dePalo | Developer">
   <div class="container">
@@ -65,16 +86,19 @@ import flower from '../icons/flower.svg';
 
   <main>
     <section class="projects__wrapper">
-      <h3>Recent Projects</h3>
-      <img src={flower} alt="" />
-      <p>I'm always coding something. Here are some of my featured works.</p>
+      <div class="title-container">
+        <!-- Check if this is the right format. Also can create a function to create icon components -->
+        <Fragment set:html={flower} />
+        <h3 id="projectsTitle">Recent Projects</h3>
+        <p>I'm always coding something. Here are some of my featured works.</p>
+      </div>
       <div class="projects">
         <!-- Pull this info from a JSON file instead and then map through it to create the components -->
         <Project
           image="shiba-tweet.png"
           alt="tweet with a shiba inu and a quote from Winston Churchill"
           title="Shiba Inu Twitter Bot"
-          description="Before Twitter started suspending bots and raising their API prices, I created a fun little bot that tweeted inspirational quotes with Shiba Inu pictures daily. The bot also runs every 5 minutes to reply to any mentions with another quote and image."
+          description="Before Twitter started suspending bots and raising their API prices, I created a fun little bot that tweeted inspirational quotes with Shiba Inu pictures daily. The bot also ran every 5 minutes to reply to any mentions with another quote and image."
           tags={['Python', 'AWS', 'Flask']}
           buttons={[
             {
@@ -132,20 +156,33 @@ import flower from '../icons/flower.svg';
     color: #fff;
   }
   main {
-    background: #ffe5e8;
+    background: #fff;
+    background-image: url('/clean-gray-paper.png');
   }
   .projects__wrapper {
     margin: auto;
     padding: 5rem 1.5rem;
     width: 1024px;
     max-width: 100%;
-    background: #ffe5e8;
+  }
+
+  .title-container {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    margin-bottom: 2rem;
+  }
+
+  .title-container + p {
+    text-align: center;
   }
 
   .projects {
     display: flex;
     flex-direction: column;
     gap: 1.5rem;
+    margin-bottom: 5rem;
   }
 
   .container {
@@ -205,6 +242,7 @@ import flower from '../icons/flower.svg';
   h3 {
     text-align: center;
     display: block;
+    margin-top: 10px;
   }
   h3 ~ p {
     text-align: center;
@@ -212,13 +250,13 @@ import flower from '../icons/flower.svg';
   }
 
   h3::after {
-    background: #a0ab92;
+    background: #0c823c;
     content: '';
     display: block;
     height: 2px;
     margin-top: 1.5em;
     width: 4em;
-    margin: 1em auto 0;
+    margin: 0.5em auto 0;
   }
 
   .weight-500 {
