@@ -1,0 +1,50 @@
+[
+  {
+    "image": "crash-the-gac-2.jpeg",
+    "alt": "tweet with a shiba inu and a quote from Winston Churchill",
+    "title": "Professional Project from Coastal here",
+    "description": "Do the Protege Competition and GAC and link to the blog posts about it",
+    "tags": [],
+    "buttons": [
+      {
+        "text": "Download the Business Proposal",
+        "href": "https://www.filene.org/blog/crashgac24"
+      },
+      {
+        "text": "What is Crash the GAC?",
+        "href": "https://www.filene.org/blog/crashgac24"
+      }
+    ]
+  },
+
+  {
+    "image": "shiba-tweet.png",
+    "alt": "tweet with a shiba inu and a quote from Winston Churchill",
+    "title": "Shiba Inu Twitter Bot",
+    "description": "Before Twitter started suspending bots and raising their API prices, I created a fun little bot that tweeted inspirational quotes with Shiba Inu pictures daily. The bot also ran every 5 minutes to reply to any mentions with another quote and image.",
+    "tags": ["Python", "AWS", "Flask"],
+    "buttons": [
+      {
+        "text": "Check Out the Code",
+        "href": "https://github.com/sarahdepalo/twitter-bot"
+      },
+      {
+        "text": "Read the Blog Post",
+        "href": "https://sarahdepalo.hashnode.dev/create-a-twitter-bot-with-python"
+      }
+    ]
+  },
+  {
+    "image": "shiba-tweet.png",
+    "alt": "tweet with a shiba inu and a quote from Winston Churchill",
+    "title": "Bootcamp Project",
+    "description": "Lorem ipsum",
+    "tags": ["JavaScript", "React"],
+    "buttons": [
+      {
+        "text": "Check out the code",
+        "href": "https://github.com/sarahdepalo/twitter-bot"
+      }
+    ]
+  }
+]

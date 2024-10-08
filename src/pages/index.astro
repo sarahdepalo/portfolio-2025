@@ -1,6 +1,7 @@
 ---
 import Layout from '../layouts/Layout.astro';
 import Project from '../components/Project.astro';
+import projectData from '../data/projects.json';
 import headshot from '../images/headshot.png';
 import bracket from '../icons/bracket.svg';
 import bike from '../icons/bike.svg';
@@ -33,12 +34,16 @@ import flower from '../icons/flower.svg?raw';
   <div class="container">
     <!-- This will be moved to the layout component once done -->
     <nav>
-      <p>Sarah</p>
-      <ul>
-        <li>
-          <a href="#">Test Link</a>
-        </li>
-      </ul>
+      <div>
+        <h2>Sarah dePalo</h2>
+      </div>
+      <div>
+        <ul>
+          <li>
+            <a href="#">Resume</a>
+          </li>
+        </ul>
+      </div>
     </nav>
     <section class="hero">
       <div class="wrapper">
@@ -63,21 +68,18 @@ import flower from '../icons/flower.svg?raw';
           <h1>
             <span class="weight-500">Hi, I'm Sarah,</span>
             <br />
-            Developer & Creator
+            Developer & Marketer
           </h1>
         </div>
         <div class="description">
+          <p>I’m passionate about tackling new challenges and delivering impactful solutions.</p>
           <p>
-            I'm excited to tackle new challenges and contribute to innovative projects that are
-            inclusive and accessible.
-          </p>
-          <p>
-            Currently, I work as a marketing web developer, constantly seeking ways to bring our
-            credit union into the future while effectively serving our member base.
+            As a marketing web developer, I focus on modernizing our credit union while ensuring our
+            members have seamless and exceptional experiences.
           </p>
           <p class="small">
-            When I'm not coding, you can find me cooking Italian food, exploring nearby trails, or
-            shopping for new plants I don't need. 🌼
+            Outside of work, you'll find me cooking up Italian recipes, exploring local trails, or
+            adding to my plant collection (because there's always room for one more 🌼).
           </p>
         </div>
       </div>
@@ -89,41 +91,23 @@ import flower from '../icons/flower.svg?raw';
       <div class="title-container">
         <!-- Check if this is the right format. Also can create a function to create icon components -->
         <Fragment set:html={flower} />
-        <h3 id="projectsTitle">Recent Projects</h3>
-        <p>I'm always coding something. Here are some of my featured works.</p>
+        <h3 id="projectsTitle">Recent Projects & Accomplishments</h3>
+        <p>I'm always up to something. Here are some of my featured works.</p>
       </div>
       <div class="projects">
         <!-- Pull this info from a JSON file instead and then map through it to create the components -->
-        <Project
-          image="shiba-tweet.png"
-          alt="tweet with a shiba inu and a quote from Winston Churchill"
-          title="Shiba Inu Twitter Bot"
-          description="Before Twitter started suspending bots and raising their API prices, I created a fun little bot that tweeted inspirational quotes with Shiba Inu pictures daily. The bot also ran every 5 minutes to reply to any mentions with another quote and image."
-          tags={['Python', 'AWS', 'Flask']}
-          buttons={[
-            {
-              text: 'Check Out the Code',
-              href: 'https://github.com/sarahdepalo/twitter-bot',
-            },
-            {
-              text: 'Read the Blog Post',
-              href: 'https://sarahdepalo.hashnode.dev/create-a-twitter-bot-with-python',
-            },
-          ]}
-        />
-        <Project
-          image="shiba-tweet.png"
-          alt="tweet with a shiba inu and a quote from Winston Churchill"
-          title="Shiba Inu Twitter Bot"
-          description="Lorem ipsum"
-          tags={['JavaScript', 'React']}
-          buttons={[
-            {
-              text: 'Check out the code',
-              href: 'https://github.com/sarahdepalo/twitter-bot',
-            },
-          ]}
-        />
+        {
+          projectData.map((project) => (
+            <Project
+              image={project.image}
+              alt={project.alt}
+              title={project.title}
+              description={project.description}
+              tags={project.tags}
+              buttons={project.buttons}
+            />
+          ))
+        }
       </div>
     </section>
   </main>
@@ -138,6 +122,7 @@ import flower from '../icons/flower.svg?raw';
     display: flex;
     flex-direction: row;
     align-items: center;
+    justify-content: space-between;
     color: #fff;
   }
   nav p {
@@ -237,6 +222,11 @@ import flower from '../icons/flower.svg?raw';
     margin: 0;
     color: #fff;
     animation: fadein 2s forwards;
+  }
+
+  nav h2 {
+    margin: 0px;
+    font-size: 20px;
   }
 
   h3 {

@@ -4,11 +4,11 @@ export interface Props {
   alt: string;
   title: string;
   description: string;
-  tags: string[];
+  tags?: string[];
   buttons: { text: string; href: string }[];
 }
 
-const { image, alt, title, description, tags, buttons } = Astro.props;
+const { image, alt, title, description, tags = [], buttons } = Astro.props;
 
 const tagHash: { [key: string]: string } = {
   aws: '#f6ff48',
@@ -19,7 +19,7 @@ const tagHash: { [key: string]: string } = {
 };
 
 const skillTags = tags.map((tag: string) => ({
-  color: tagHash[tag.toLowerCase()],
+  color: tagHash[tag.toLowerCase()] || '#ffe5e8', // Default color if not in tagHash
   name: tag,
 }));
 ---
@@ -32,11 +32,7 @@ const skillTags = tags.map((tag: string) => ({
     <div class="project__header">
       <h4>{title}</h4>
       <div>
-        {
-          skillTags.map((tag) => (
-            <span style={`background-color: ${tag.color ? tag.color : '#ffe5e8'}`}>{tag.name}</span>
-          ))
-        }
+        {skillTags.map((tag) => <span style={`background-color: ${tag.color}`}>{tag.name}</span>)}
       </div>
     </div>
     <p class="description">{description}</p>
@@ -50,7 +46,7 @@ const skillTags = tags.map((tag: string) => ({
   .project__container {
     display: flex;
     flex-direction: column;
-    align-items: center;
+    align-items: start;
     background: rgb(77, 99, 49);
     background: linear-gradient(333deg, rgba(77, 99, 49, 1) 37%, rgba(50, 74, 52, 1) 66%);
     color: #fff;
@@ -65,6 +61,7 @@ const skillTags = tags.map((tag: string) => ({
   }
   .project__info {
     width: 100%;
+    margin-top: 10px;
   }
 
   .project__header {
@@ -88,6 +85,7 @@ const skillTags = tags.map((tag: string) => ({
     margin: 0 auto;
     width: 80%;
     max-width: 400px;
+    border-radius: 15px;
   }
 
   .description {
@@ -104,7 +102,9 @@ const skillTags = tags.map((tag: string) => ({
   .btn__container {
     display: flex;
     justify-content: space-around;
+    flex-direction: column;
     column-gap: 1rem;
+    row-gap: 1rem;
   }
 
   a {
@@ -171,6 +171,7 @@ const skillTags = tags.map((tag: string) => ({
 
     .btn__container {
       justify-content: flex-start;
+      flex-direction: row;
     }
 
     .description {
