@@ -3,42 +3,63 @@ import Layout from '../layouts/Layout.astro';
 import Project from '../components/Project.astro';
 import projectData from '../data/projects.json';
 import headshot from '../images/headshot.png';
-import bracket from '../icons/bracket.svg';
-import bike from '../icons/bike.svg';
-import controller from '../icons/controller.svg';
 import flower from '../icons/flower.svg?raw';
 ---
 
 <script>
+  const navLinks = document.querySelector('#navLinks');
   const svg = document.querySelector('#flower');
-  const svgLocation = svg.getBoundingClientRect();
-  const offset = svgLocation.y + svgLocation.height;
-
   const animateSection = svg?.querySelectorAll('g');
 
-  // Calculate the position when the element should start animating
-  // Add animation classes if in viewport then remove eventlistener
-  function handleScroll() {
-    let viewBottom = window.scrollY + window.innerHeight;
-    if (viewBottom > offset) {
-      animateSection[0].classList.add('line-plant2-pot');
-      animateSection[1].classList.add('line-plant2-plant');
-      document.removeEventListener('scroll', handleScroll);
+  if (svg && animateSection) {
+    const observer = new IntersectionObserver(
+      (entries, observer) => {
+        entries.forEach((entry) => {
+          if (entry.isIntersecting) {
+            animateSection[0]?.classList.add('line-plant2-pot');
+            animateSection[1]?.classList.add('line-plant2-plant');
+            observer.unobserve(entry.target); // stop observing after animating
+          }
+        });
+      },
+      {
+        threshold: 0.1, // trigger when 10% of the element is visible
+      }
+    );
+
+    observer.observe(svg);
+  }
+
+  function handleNavBorder() {
+    const scrollThreshold = 50;
+    if (window.scrollY > scrollThreshold) {
+      navLinks?.classList.remove('bottom-border');
+      navLinks?.classList.add('remove-border');
+    } else {
+      navLinks?.classList.add('bottom-border');
+      navLinks?.classList.remove('remove-border');
     }
   }
 
-  document.addEventListener('scroll', handleScroll);
+  // Listen to scroll for nav border
+  document.addEventListener('scroll', handleNavBorder);
+  window.addEventListener('resize', handleNavBorder);
+  window.addEventListener('load', handleNavBorder);
 </script>
 
 <Layout title="Sarah dePalo | Marketer & Developer">
   <!-- This will be moved to the layout component once done -->
   <nav>
-    <div class="nav__links">
-      <ul>
-        <li><h2>Sarah dePalo</h2></li>
-        <li><a href="#">Resume</a></li>
-        <li><a href="#">LinkedIn</a></li>
-      </ul>
+    <div class="nav__links" id="navLinks">
+      <div>
+        <img src="/logo.png" alt="Sarah dePalo" class="nav__logo" />
+      </div>
+      <div>
+        <ul>
+          <li><a href="#">Resume</a></li>
+          <li><a href="https://www.linkedin.com/in/sarahdepalo/">LinkedIn</a></li>
+        </ul>
+      </div>
     </div>
   </nav>
   <div class="hero">
@@ -50,16 +71,6 @@ import flower from '../icons/flower.svg?raw';
             alt="Developer smiling against a pink background, eager for you to reach out on LinkedIn"
             class="headshot__img"
           />
-
-          <!-- <div class="gradient-circle">
-            <img src={bracket} alt="" />
-          </div>
-          <div class="gradient-circle">
-            <img src={bike} alt="" />
-          </div>
-          <div class="gradient-circle">
-            <img src={controller} alt="" />
-          </div> -->
         </div>
         <div class="hero__name">
           <h1>
@@ -115,12 +126,16 @@ import flower from '../icons/flower.svg?raw';
 <style>
   nav {
     margin: 0 auto;
-    padding: 20px 0px 0px;
-    position: sticky;
+    padding: 5px 0px 0px;
+    position: fixed;
     top: 0;
+    left: 0;
+    right: 0;
     z-index: 1000;
     background: #324a34;
     background-image: url('/hero-bg.png');
+    background-repeat: no-repeat;
+    background-position: inherit;
   }
 
   nav p {
@@ -130,21 +145,73 @@ import flower from '../icons/flower.svg?raw';
   }
 
   nav ul {
-    margin: 0px 100px 0px 40px;
-    padding-bottom: 10px;
+    margin: 0px 10px 0px;
     list-style-type: none;
     display: flex;
-    flex-direction: row;
-    align-items: center;
-    justify-content: space-between;
-    color: #fff;
-    border-bottom: 1px solid #ffffff79;
+    gap: 60px;
   }
 
   nav a {
     text-decoration: none;
     color: #fff;
+    position: relative;
   }
+
+  nav a::before {
+    content: '';
+    position: absolute;
+    width: 100%;
+    height: 3px;
+    border-radius: 4px;
+    background-color: #ffffff79;
+    bottom: -5px;
+    left: 0;
+    transform-origin: right;
+    transform: scaleX(0);
+    transition: transform 0.3s ease-in-out;
+  }
+
+  nav a:hover::before {
+    transform-origin: left;
+    transform: scaleX(1);
+  }
+
+  .nav__links {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-between;
+    color: #fff;
+    margin: 0 auto;
+    padding-bottom: 5px;
+    position: relative;
+  }
+
+  .nav__links::after {
+    content: '';
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    height: 0.5px;
+    background-color: #ffffff79;
+    opacity: 1;
+    transition: opacity 0.8s ease;
+  }
+
+  .nav__links.bottom-border::after {
+    opacity: 1;
+  }
+
+  .nav__links.remove-border::after {
+    opacity: 0;
+  }
+
+  .nav__logo {
+    height: 60px;
+    margin-left: 5px;
+  }
+
   main {
     background: #fff;
     background-image: url('/clean-gray-paper.png');
@@ -186,7 +253,11 @@ import flower from '../icons/flower.svg?raw';
   }
 
   .hero__section {
-    padding: 50px 0px;
+    padding-top: 100px;
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    justify-content: center; /* vertically center content */
   }
   .hero__grid {
     display: grid;
@@ -197,6 +268,15 @@ import flower from '../icons/flower.svg?raw';
     max-width: 100%;
     width: 1024px;
     color: #fff;
+  }
+
+  .hero__name {
+    align-self: center;
+  }
+
+  .hero__description {
+    grid-column-start: span 2;
+    padding: 0 1rem;
   }
 
   .headshot {
@@ -210,15 +290,6 @@ import flower from '../icons/flower.svg?raw';
     width: 100%;
     max-width: 400px;
     position: relative;
-  }
-
-  .hero__name {
-    align-self: center;
-  }
-
-  .hero__description {
-    grid-column-start: span 2;
-    padding: 0 1rem;
   }
 
   h1 {
@@ -381,13 +452,17 @@ import flower from '../icons/flower.svg?raw';
   }
 
   @media (min-width: 680px) {
+    .nav__links {
+      width: 90%;
+    }
+
     .hero__grid {
       gap: 24px 40px;
       max-width: 80vw;
       grid-template-columns: 3fr 5fr;
     }
     .hero__section {
-      padding: 80px 0px;
+      padding: 100px 1.5rem;
     }
     .headshot {
       grid-row-start: span 2;
