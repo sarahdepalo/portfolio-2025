@@ -30,31 +30,28 @@ import flower from '../icons/flower.svg?raw';
   document.addEventListener('scroll', handleScroll);
 </script>
 
-<Layout title="Sarah dePalo | Developer">
-  <div class="container">
-    <!-- This will be moved to the layout component once done -->
-    <nav>
-      <div>
-        <h2>Sarah dePalo</h2>
-      </div>
-      <div>
-        <ul>
-          <li>
-            <a href="#">Resume</a>
-          </li>
-        </ul>
-      </div>
-    </nav>
-    <section class="hero">
-      <div class="wrapper">
-        <div class="headshot-container">
+<Layout title="Sarah dePalo | Marketer & Developer">
+  <!-- This will be moved to the layout component once done -->
+  <nav>
+    <div class="nav__links">
+      <ul>
+        <li><h2>Sarah dePalo</h2></li>
+        <li><a href="#">Resume</a></li>
+        <li><a href="#">LinkedIn</a></li>
+      </ul>
+    </div>
+  </nav>
+  <div class="hero">
+    <section class="hero__section">
+      <div class="hero__grid">
+        <div class="headshot">
           <img
             src={headshot}
             alt="Developer smiling against a pink background, eager for you to reach out on LinkedIn"
-            class="headshot"
+            class="headshot__img"
           />
 
-          <div class="gradient-circle">
+          <!-- <div class="gradient-circle">
             <img src={bracket} alt="" />
           </div>
           <div class="gradient-circle">
@@ -62,23 +59,26 @@ import flower from '../icons/flower.svg?raw';
           </div>
           <div class="gradient-circle">
             <img src={controller} alt="" />
-          </div>
+          </div> -->
         </div>
-        <div class="name">
+        <div class="hero__name">
           <h1>
             <span class="weight-500">Hi, I'm Sarah,</span>
             <br />
-            Developer & Marketer
+            Marketer & Developer
           </h1>
         </div>
-        <div class="description">
-          <p>I’m passionate about tackling new challenges and delivering impactful solutions.</p>
+        <div class="hero__description">
           <p>
-            As a marketing web developer, I focus on modernizing our credit union while ensuring our
-            members have seamless and exceptional experiences.
+            I’m passionate about the intersection of marketing and technology. I thrive on
+            challenges that let me combine my technical background with creativity to build
+            marketing solutions that deliver fun, impactful experiences for users.
+          </p>
+          <p>
+            I enjoy leading martech architecture projects and getting into the nitty-gritty of data.
           </p>
           <p class="small">
-            Outside of work, you'll find me cooking up Italian recipes, exploring local trails, or
+            Outside of work, you'll find me cooking up Italian food, exploring local trails, or
             adding to my plant collection (because there's always room for one more 🌼).
           </p>
         </div>
@@ -95,7 +95,6 @@ import flower from '../icons/flower.svg?raw';
         <p>I'm always up to something. Here are some of my featured works.</p>
       </div>
       <div class="projects">
-        <!-- Pull this info from a JSON file instead and then map through it to create the components -->
         {
           projectData.map((project) => (
             <Project
@@ -115,16 +114,15 @@ import flower from '../icons/flower.svg?raw';
 
 <style>
   nav {
-    width: 90%;
     margin: 0 auto;
-    padding: 25px 0px;
-    border-bottom: 1px solid #ffffff79;
-    display: flex;
-    flex-direction: row;
-    align-items: center;
-    justify-content: space-between;
-    color: #fff;
+    padding: 20px 0px 0px;
+    position: sticky;
+    top: 0;
+    z-index: 1000;
+    background: #324a34;
+    background-image: url('/hero-bg.png');
   }
+
   nav p {
     font-weight: bold;
     font-size: 20px;
@@ -132,8 +130,15 @@ import flower from '../icons/flower.svg?raw';
   }
 
   nav ul {
-    margin: 0px;
+    margin: 0px 100px 0px 40px;
+    padding-bottom: 10px;
     list-style-type: none;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-between;
+    color: #fff;
+    border-bottom: 1px solid #ffffff79;
   }
 
   nav a {
@@ -170,7 +175,7 @@ import flower from '../icons/flower.svg?raw';
     margin-bottom: 5rem;
   }
 
-  .container {
+  .hero {
     background: #324a34;
     background-image: url('/hero-bg.png');
     background-repeat: no-repeat;
@@ -180,10 +185,10 @@ import flower from '../icons/flower.svg?raw';
     margin: 0;
   }
 
-  .hero {
+  .hero__section {
     padding: 50px 0px;
   }
-  .wrapper {
+  .hero__grid {
     display: grid;
     gap: 15px 15px;
     grid-template-columns: 3fr 4fr;
@@ -194,24 +199,24 @@ import flower from '../icons/flower.svg?raw';
     color: #fff;
   }
 
-  .headshot-container {
+  .headshot {
     position: relative;
     justify-self: stretch;
     align-self: center;
   }
 
-  .headshot {
+  .headshot__img {
     display: block;
     width: 100%;
     max-width: 400px;
     position: relative;
   }
 
-  .name {
+  .hero__name {
     align-self: center;
   }
 
-  .description {
+  .hero__description {
     grid-column-start: span 2;
     padding: 0 1rem;
   }
@@ -376,24 +381,24 @@ import flower from '../icons/flower.svg?raw';
   }
 
   @media (min-width: 680px) {
-    .wrapper {
+    .hero__grid {
       gap: 24px 40px;
       max-width: 80vw;
       grid-template-columns: 3fr 5fr;
     }
-    .hero {
+    .hero__section {
       padding: 80px 0px;
     }
-    .headshot-container {
+    .headshot {
       grid-row-start: span 2;
       justify-self: center;
     }
 
-    .name {
+    .hero__name {
       align-self: end;
     }
 
-    .description {
+    .hero__description {
       grid-column-start: 2;
       grid-row-start: 2;
       padding: 0;
@@ -407,7 +412,7 @@ import flower from '../icons/flower.svg?raw';
     }
   }
   @media (min-width: 1024px) {
-    .wrapper {
+    .hero__grid {
       gap: 24px 60px;
       grid-template-columns: 3fr 5fr;
     }
@@ -418,7 +423,7 @@ import flower from '../icons/flower.svg?raw';
   }
 
   @media (prefers-reduced-motion: reduce) {
-    .description p,
+    .hero__description p,
     h1 {
       animation: none;
     }
