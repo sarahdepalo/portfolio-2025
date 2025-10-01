@@ -1,0 +1,32 @@
+---
+export interface Props {
+  image?: string;
+  alt?: string;
+  title: string;
+  description: string;
+}
+
+const { image, alt, title, description } = Astro.props;
+---
+
+<div class="content-box">
+  {image && <img src={image} alt={alt} class="project-image" />}
+  <h4>{title}</h4>
+  {(<p>{description}</p>)}
+</div>
+
+<style>
+  .content-box {
+    background: #fdf9f5;
+    border: 1px solid grey;
+    padding: 25px;
+    border-radius: 8px;
+    text-align: center;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  }
+  .project-image {
+    width: 90%;
+    height: auto;
+    border-radius: 6px;
+  }
+</style>
