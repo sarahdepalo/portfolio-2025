@@ -4,9 +4,11 @@ export interface Props {
   alt: string;
   title: string;
   description: string;
+  impactList: array;
+  skills: string;
 }
 
-const { image, alt, title, description } = Astro.props;
+const { image, alt, title, description, impactList, skills } = Astro.props;
 ---
 
 <div class="project__container">
@@ -18,6 +20,17 @@ const { image, alt, title, description } = Astro.props;
       <h4>{title}</h4>
     </div>
     <p class="description">{description}</p>
+    <p><strong>Impact:</strong></p>
+    {
+      impactList && (
+        <ul>
+          {impactList.map((impact) => (
+            <li>{impact}</li>
+          ))}
+        </ul>
+      )
+    }
+    <p><strong>Skills:</strong> {skills}</p>
   </div>
 </div>
 
@@ -61,9 +74,12 @@ const { image, alt, title, description } = Astro.props;
   img {
     display: block;
     margin: 0 auto;
-    width: 80%;
+    width: 100%;
     max-width: 400px;
     border-radius: 15px;
+  }
+  li {
+    font-size: 1.1rem;
   }
 
   .description {
@@ -90,7 +106,7 @@ const { image, alt, title, description } = Astro.props;
     }
 
     .project__image {
-      width: 70%;
+      width: 50%;
     }
     .project__info {
       width: 70%;

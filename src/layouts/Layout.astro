@@ -26,13 +26,13 @@ import GithubIcon from '../icons/github.png';
     &copy; 2025 Sarah dePalo
     <div class="footer__icons">
       <a href="https://www.linkedin.com/in/sarahdepalo/" target="_blank" rel="noopener noreferrer">
-        <img src={LinkedInIcon} alt="LinkedIn" />
+        <img src={LinkedInIcon} alt="LinkedIn" class="social" />
       </a>
       <a href="https://github.com/sarahdepalo" target="_blank" rel="noopener noreferrer">
-        <img src={GithubIcon} alt="GitHub" />
+        <img src={GithubIcon} alt="GitHub" class="social" />
       </a>
       <a href="mailto:sarahdepalo99@gmail.com" target="_blank" rel="noopener noreferrer">
-        <img src={MailIcon} alt="Email" />
+        <img src={MailIcon} alt="Email" class="social" />
       </a>
     </div>
   </footer>
@@ -74,5 +74,9 @@ import GithubIcon from '../icons/github.png';
 
   .footer__icons a {
     text-decoration: none;
+  }
+
+  .social:hover {
+    opacity: 0.7;
   }
 </style>

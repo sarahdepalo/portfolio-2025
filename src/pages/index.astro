@@ -1,98 +1,63 @@
 ---
 import Layout from '../layouts/Layout.astro';
 import Project from '../components/Project.astro';
-// import projectData from '../data/projects.json';
+import projectData from '../data/projects.json';
 import headshot from '../images/headshot.png';
 import flower from '../icons/flower.svg?raw';
-
-const projectData = [
-  {
-    image: '/onboarding.png',
-    alt: 'Sarah and a coworker journey mapping the onboarding experience',
-    title: 'Onboarding Redesign',
-
-    description:
-      'Transformed a static 2-email onboarding process into a dynamic 30-day, multi-step journey, tailored to member products and actions. Collaborated across departments to identify pain points, implement automated email journeys, and improve both branch and digital experiences. Resulted in enhanced member engagement and higher product utilization.',
-  },
-  {
-    title: 'Snowflake Integration',
-    description:
-      'Led the integration of real-time data between the core system, Braze, and Snowflake. Streamlined marketing operations by replacing manual CSV processes with automated data flows, enabling personalized campaigns at scale. Implemented error-handling and logging for reliability, improving efficiency for marketing and analytics teams.',
-  },
-  {
-    image: '/protege.jpg',
-    alt: `Sarah standing in front of a slide deck after winning Coastal's interal speech competition. `,
-    title: 'AI Committee Proposal',
-    description:
-      'Presented an internal proposal on AI ethics and application, winning a company-wide speech competition. This led to the formation of an AI committee and official AI policy, positioning the company to adopt AI responsibly. Demonstrated thought leadership, communication, and ability to influence cross-functional teams.',
-  },
-];
 ---
 
 <script>
-  const navLinks = document.querySelector('#navLinks');
-  const svg = document.querySelector('#flower');
-  const animateSection = svg?.querySelectorAll('g');
-  const rotationArray = [
-    'email marketing',
-    'journey mapping',
-    'marketing strategy',
-    'CRM management',
-    'customer retention',
-    'project management',
-    'marketing automation',
-    'campaign development',
-    'multi-channel marketing',
-    'web development',
-  ];
-  let currentIndex = 0;
-  const rotationSpanEl = document.getElementById('rotationText');
+  import rotationArray from '../data/rotationArray.json';
 
+  // Hero rotation text
+  const rotationSpanEl = document.getElementById('rotationText');
+  let currentIndex = 0;
   function rotateText() {
     rotationSpanEl.textContent = rotationArray[currentIndex] + '.';
     currentIndex = (currentIndex + 1) % rotationArray.length;
   }
-
   rotateText();
   rotationSpanEl?.addEventListener('animationiteration', rotateText);
 
+  // Flower SVG animation
+  const svg = document.querySelector('#flower');
+  const animateSection = svg?.querySelectorAll('g');
   if (svg && animateSection) {
     const observer = new IntersectionObserver(
-      (entries, observer) => {
+      (entries, obs) => {
         entries.forEach((entry) => {
           if (entry.isIntersecting) {
             animateSection[0]?.classList.add('line-plant2-pot');
             animateSection[1]?.classList.add('line-plant2-plant');
-            observer.unobserve(entry.target); // stop observing after animating
+            obs.unobserve(entry.target);
           }
         });
       },
-      {
-        threshold: 0.1, // trigger when 10% of the element is visible
-      }
+      { threshold: 0.1 }
     );
-
     observer.observe(svg);
   }
 
+  // Nav scroll behavior
+  const navLinks = document.querySelector('#navLinks');
   function handleNavBorder() {
-    const scrollThreshold = 50;
-    if (window.scrollY > scrollThreshold) {
-      navLinks?.classList.remove('bottom-border');
-      navLinks?.classList.add('remove-border');
+    if (window.scrollY > 50) {
+      navLinks?.classList.replace('bottom-border', 'remove-border');
     } else {
-      navLinks?.classList.add('bottom-border');
-      navLinks?.classList.remove('remove-border');
+      navLinks?.classList.replace('remove-border', 'bottom-border');
     }
   }
+  window.addEventListener('scroll', handleNavBorder);
+  window.addEventListener('resize', handleNavBorder);
+  window.addEventListener('load', handleNavBorder);
+
+  // Hamburger menu
   const navToggle = document.getElementById('hamburger');
   const navMenu = document.querySelector('.nav__menu');
-
   navToggle?.addEventListener('click', () => {
-    navToggle.classList.toggle('open'); // triggers X animation
-    navMenu.classList.toggle('open'); // toggles the menu visibility
-    const isOpen = navToggle.classList.contains('open');
-    navToggle.setAttribute('aria-expanded', isOpen ? 'true' : 'false');
+    navToggle.classList.toggle('open');
+    navMenu.classList.toggle('open');
+    navToggle.setAttribute('aria-expanded', navToggle.classList.contains('open'));
   });
 
   function closeMenuOnDesktop() {
@@ -102,19 +67,14 @@ const projectData = [
       navToggle.setAttribute('aria-expanded', 'false');
     }
   }
-
   window.addEventListener('resize', closeMenuOnDesktop);
-
-  document.addEventListener('scroll', handleNavBorder);
-  window.addEventListener('resize', handleNavBorder);
-  window.addEventListener('load', handleNavBorder);
 </script>
 
 <Layout title="Sarah dePalo | Marketer & Developer">
   <!-- This will be moved to the layout component once done -->
 
   <nav>
-    <div class="nav__links" id="navLinks">
+    <div class="nav__links bottom-border" id="navLinks">
       <div>
         <img src="/logo.png" alt="Sarah dePalo" class="nav__logo" />
       </div>
@@ -180,15 +140,13 @@ const projectData = [
       <div class="title__container">
         <Fragment set:html={flower} />
         <h3 id="projectsTitle">Recent Projects</h3>
-        <p>A mix of projects that challenged me, sparked new ideas, and pushed me forward.</p>
+        <p>
+          Here are some recent initiatives that I've led at Coastal Credit Union. I'm always looking
+          for new ways to challenge myself and grow as a marketer.
+        </p>
       </div>
 
-      <div class="projects-wrapper">
-        <!-- Connector SVG -->
-        <svg class="connector">
-          <path fill="transparent" stroke-width="1"></path>
-        </svg>
-
+      <div>
         <div class="projects">
           <div class="projects__flex">
             {
@@ -198,6 +156,8 @@ const projectData = [
                   alt={project.alt}
                   title={project.title}
                   description={project.description}
+                  skills={project.skills}
+                  impactList={project.impactList}
                 />
               ))
             }
@@ -382,6 +342,10 @@ const projectData = [
       left: 50%;
     }
 
+    .projects__wrapper {
+      padding-top: 60px;
+    }
+
     @media (min-width: 450px) {
       #hamburger {
         display: none;
@@ -469,7 +433,8 @@ const projectData = [
       flex-direction: column;
       justify-content: center;
       align-items: center;
-      margin-bottom: 2rem;
+      margin-bottom: 1rem;
+      padding: 0rem 1.5rem;
     }
 
     .title__container p {
@@ -483,12 +448,6 @@ const projectData = [
       gap: 2.5rem;
       margin-bottom: 5rem;
     }
-    /* .projects-wrapper {
-      position: relative;
-      max-width: 900px;
-      margin: 0px auto;
-      padding-bottom: 60px;
-    } */
 
     .connector {
       position: absolute;
@@ -669,11 +628,6 @@ const projectData = [
       animation: fadein 2s forwards;
     }
 
-    nav h2 {
-      margin: 0px;
-      font-size: 20px;
-    }
-
     .title__container h3 {
       text-align: center;
       display: block;
@@ -700,55 +654,6 @@ const projectData = [
       font-size: 0.87rem;
     }
 
-    .gradient-circle {
-      background: linear-gradient(-45deg, #bbcd27, #0c823c, #324a34);
-      background-size: 400% 400%;
-      display: none;
-      -webkit-animation: fadeInScale 1s forwards, gradient 5s ease infinite;
-      -moz-animation: fadeInScale 1s forwards, gradient 5s ease infinite;
-      animation: fadeInScale 1s forwards, gradient 5s ease infinite;
-      animation-delay: 1.2s;
-      position: absolute;
-      align-items: center;
-      opacity: 0;
-      transform: scale(0.2) translate(-50%, -50%);
-      transform-origin: center;
-      z-index: 1;
-      border-radius: 100%;
-      max-height: 100px;
-      max-width: 100px;
-      text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
-    }
-
-    .gradient-circle img {
-      width: 80%;
-      height: 80%;
-      margin: 0 auto;
-    }
-
-    .gradient-circle:nth-of-type(1) {
-      top: 25%;
-      left: 8%;
-      height: 18%;
-      width: 25%;
-    }
-
-    .gradient-circle:nth-of-type(2) {
-      top: 50%;
-      left: 90%;
-      width: 18%;
-      height: 13%;
-      animation-delay: 1.5s;
-    }
-
-    .gradient-circle:nth-of-type(3) {
-      top: 80%;
-      left: 7%;
-      width: 20%;
-      height: 15%;
-      animation-delay: 1.8s;
-    }
-
     @keyframes fadein {
       from {
         opacity: 0;
@@ -767,51 +672,6 @@ const projectData = [
       to {
         opacity: 1;
         transform: translateY(0);
-      }
-    }
-
-    @keyframes fadeInScale {
-      0% {
-        opacity: 0;
-        transform: scale(0.2) translate(-50%, -50%);
-      }
-      100% {
-        opacity: 1;
-        transform: scale(1) translate(-50%, -50%);
-      }
-    }
-
-    @-webkit-keyframes gradient {
-      0% {
-        background-position: 0% 50%;
-      }
-      50% {
-        background-position: 100% 50%;
-      }
-      100% {
-        background-position: 0% 50%;
-      }
-    }
-    @-moz-keyframes gradient {
-      0% {
-        background-position: 0% 50%;
-      }
-      50% {
-        background-position: 100% 50%;
-      }
-      100% {
-        background-position: 0% 50%;
-      }
-    }
-    @keyframes gradient {
-      0% {
-        background-position: 0% 50%;
-      }
-      50% {
-        background-position: 100% 50%;
-      }
-      100% {
-        background-position: 0% 50%;
       }
     }
 
@@ -869,11 +729,6 @@ const projectData = [
       .hero__description p,
       h1 {
         animation: none;
-      }
-      .gradient-circle {
-        animation: none;
-        opacity: 1;
-        transform: scale(1) translate(-50%, -50%);
       }
     }
   </style>
